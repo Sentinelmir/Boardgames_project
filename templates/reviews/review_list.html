@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Reviews · Boardgame World{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-end justify-content-between gap-2 mb-3">
+  <div>
+    <h1 class="h4 mb-1">Reviews</h1>
+    <div class="muted">A simple feed. Later we’ll load reviews from the database.</div>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="soft-card p-3 mb-3">
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <div class="fw-bold">Brass: Birmingham</div>
+        <div class="muted small">by Alex</div>
+      </div>
+      <span class="chip">★ 5</span>
+    </div>
+    <p class="muted small mt-2 mb-0">Tight, rewarding, and surprisingly replayable. Great economic tension.</p>
+  </div>
+
+  <div class="soft-card p-3 mb-3">
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <div class="fw-bold">Brass: Birmingham</div>
+        <div class="muted small">by Mina</div>
+      </div>
+      <span class="chip">★ 4</span>
+    </div>
+    <p class="muted small mt-2 mb-0">A bit heavy at first, but once it clicks it’s fantastic.</p>
+  </div>
+
+  <div class="soft-card p-3">
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <div class="fw-bold">Brass: Birmingham</div>
+        <div class="muted small">by Sam</div>
+      </div>
+      <span class="chip">★ 5</span>
+    </div>
+    <p class="muted small mt-2 mb-0">One of my favorite economic games. Every decision matters.</p>
+  </div>
+</div>
+{% endblock %}

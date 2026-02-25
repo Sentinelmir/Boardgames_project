@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block title %}Brass: Birmingham · Boardgame World{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+  <div class="col-lg-5">
+    <div class="soft-card p-3">
+      <img class="game-thumb mb-3" src="https://images.unsplash.com/photo-1611996575749-79a3a250f948?auto=format&fit=crop&w=900&q=60" alt="Brass: Birmingham">
+      <div class="d-flex align-items-start justify-content-between gap-2">
+        <div>
+          <h1 class="h4 mb-1">Brass: Birmingham</h1>
+          <div class="muted">Economic · Strategy</div>
+        </div>
+        <span class="chip">★ 4.7</span>
+      </div>
+
+      <div class="kv mt-3">
+        <span class="chip">Players: 2–4</span>
+        <span class="chip">Time: 60–120 min</span>
+        <span class="chip">Age: 14+</span>
+      </div>
+
+      <div class="d-flex gap-2 mt-3">
+        <a class="btn btn-sm btn-primary" href="#">Add review</a>
+        <a class="btn btn-sm btn-outline-secondary" href="#">Edit</a>
+        <a class="btn btn-sm btn-outline-danger" href="#">Delete</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-7">
+    <div class="panel mb-4">
+      <h2 class="h5 section-title mb-2">Description</h2>
+      <p class="muted mb-0">
+        Brass: Birmingham is a deep economic strategy game set during the Industrial Revolution.
+        You develop industries, build networks (canals and railways), and compete for points through efficient production and smart market timing.
+      </p>
+    </div>
+
+    <div class="panel mb-4">
+      <h2 class="h5 section-title mb-3">Genres</h2>
+      <div class="d-flex flex-wrap gap-2">
+        <a class="chip link-soft" href="#">Economic</a>
+        <a class="chip link-soft" href="#">Strategy</a>
+        <a class="chip link-soft" href="#">Eurogame</a>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="d-flex align-items-end justify-content-between gap-2 mb-3">
+        <h2 class="h5 section-title mb-0">Reviews</h2>
+        <a class="link-soft" href="#">See all</a>
+      </div>
+
+      <div class="soft-card p-3 mb-3">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="fw-bold">Alex</div>
+          <span class="chip">★ 5</span>
+        </div>
+        <div class="muted small mt-1">“Tight, rewarding, and surprisingly replayable. Love the network building.”</div>
+        <div class="mt-2 d-flex gap-2">
+          <a class="btn btn-sm btn-outline-secondary" href="#">Edit</a>
+          <a class="btn btn-sm btn-outline-danger" href="#">Delete</a>
+        </div>
+      </div>
+
+      <div class="soft-card p-3 mb-3">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="fw-bold">Mina</div>
+          <span class="chip">★ 4</span>
+        </div>
+        <div class="muted small mt-1">“A bit heavy for beginners, but amazing once it clicks.”</div>
+        <div class="mt-2 d-flex gap-2">
+          <a class="btn btn-sm btn-outline-secondary" href="#">Edit</a>
+          <a class="btn btn-sm btn-outline-danger" href="#">Delete</a>
+        </div>
+      </div>
+
+      <div class="soft-card p-3">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="fw-bold">Sam</div>
+          <span class="chip">★ 5</span>
+        </div>
+        <div class="muted small mt-1">“One of my top economic games. Every decision matters.”</div>
+        <div class="mt-2 d-flex gap-2">
+          <a class="btn btn-sm btn-outline-secondary" href="#">Edit</a>
+          <a class="btn btn-sm btn-outline-danger" href="#">Delete</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

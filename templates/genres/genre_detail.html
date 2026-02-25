@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Economic · Genres · Boardgame World{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-end justify-content-between gap-2 mb-3">
+  <div>
+    <h1 class="h4 mb-1">Economic</h1>
+    <div class="muted">Games tagged with “Economic”.</div>
+  </div>
+  <a class="btn btn-sm btn-outline-secondary" href="#">All genres</a>
+</div>
+
+<div class="row g-3">
+  <div class="col-md-6 col-lg-4">{% include "partials/_game_card.html" %}</div>
+  <div class="col-md-6 col-lg-4">{% include "partials/_game_card.html" %}</div>
+  <div class="col-md-6 col-lg-4">{% include "partials/_game_card.html" %}</div>
+</div>
+{% endblock %}

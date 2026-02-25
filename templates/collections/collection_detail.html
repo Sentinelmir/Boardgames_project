@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Cozy strategy evenings · Collections · Boardgame World{% endblock %}
+
+{% block content %}
+<div class="panel mb-4">
+  <img class="collection-banner mb-3" src="https://images.unsplash.com/photo-1523875194681-bedd468c58bf?auto=format&fit=crop&w=1400&q=60" alt="Collection banner">
+
+  <div class="d-flex align-items-start justify-content-between gap-2">
+    <div>
+      <h1 class="h4 mb-1">Cozy strategy evenings</h1>
+      <div class="muted">
+        Longer games for 2–4 players when you want something thoughtful and satisfying.
+      </div>
+    </div>
+    <span class="chip">8 games</span>
+  </div>
+
+  <div class="mt-3">
+    <a class="btn btn-sm btn-outline-secondary" href="#">All collections</a>
+  </div>
+</div>
+
+<h2 class="h5 section-title mb-3">Games in this collection</h2>
+<div class="row g-3">
+  <div class="col-md-6 col-lg-4">{% include "partials/_game_card.html" %}</div>
+  <div class="col-md-6 col-lg-4">{% include "partials/_game_card.html" %}</div>
+  <div class="col-md-6 col-lg-4">{% include "partials/_game_card.html" %}</div>
+  <div class="col-md-6 col-lg-4">{% include "partials/_game_card.html" %}</div>
+  <div class="col-md-6 col-lg-4">{% include "partials/_game_card.html" %}</div>
+  <div class="col-md-6 col-lg-4">{% include "partials/_game_card.html" %}</div>
+</div>
+{% endblock %}

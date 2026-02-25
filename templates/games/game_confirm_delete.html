@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Delete game · Boardgame World{% endblock %}
+
+{% block content %}
+<div class="panel">
+  <h1 class="h4 mb-2">Delete game</h1>
+  <p class="muted mb-3">
+    This is a placeholder confirmation page. Later we’ll connect it to a Django DeleteView and a form with disabled fields.
+  </p>
+
+  <div class="soft-card p-3 mb-3">
+    <div class="fw-bold">Brass: Birmingham</div>
+    <div class="muted small">Economic · Strategy · 2–4 players · 60–120 min</div>
+  </div>
+
+  <div class="d-flex gap-2">
+    <button class="btn btn-danger" type="button">Yes, delete</button>
+    <a class="btn btn-outline-secondary" href="#">Cancel</a>
+  </div>
+</div>
+{% endblock %}

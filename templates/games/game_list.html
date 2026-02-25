@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Games · Boardgame World{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap align-items-end justify-content-between gap-2 mb-3">
+  <div>
+    <h1 class="h4 mb-1">Games</h1>
+    <div class="muted">Browse the catalog. Filtering will be added later.</div>
+  </div>
+  <a class="btn btn-sm btn-primary" href="#">Add game</a>
+</div>
+
+<div class="panel mb-4">
+  <div class="row g-3">
+    <div class="col-md-4">
+      <label class="form-label">Genre</label>
+      <select class="form-select">
+        <option selected>Any</option>
+        <option>Strategy</option>
+        <option>Economic</option>
+        <option>Family</option>
+        <option>Party</option>
+      </select>
+    </div>
+    <div class="col-md-4">
+      <label class="form-label">Duration</label>
+      <select class="form-select">
+        <option selected>Any</option>
+        <option>Up to 30 min</option>
+        <option>Up to 60 min</option>
+        <option>60–120 min</option>
+      </select>
+    </div>
+    <div class="col-md-4">
+      <label class="form-label">Players</label>
+      <input class="form-control" placeholder="e.g. 3">
+    </div>
+    <div class="col-12 d-flex gap-2">
+      <a class="btn btn-sm btn-outline-secondary" href="#">Apply</a>
+      <a class="btn btn-sm btn-outline-secondary" href="#">Reset</a>
+    </div>
+  </div>
+</div>
+
+<div class="row g-3">
+  <div class="col-md-6 col-lg-4">{% include "partials/_game_card.html" %}</div>
+  <div class="col-md-6 col-lg-4">{% include "partials/_game_card.html" %}</div>
+  <div class="col-md-6 col-lg-4">{% include "partials/_game_card.html" %}</div>
+  <div class="col-md-6 col-lg-4">{% include "partials/_game_card.html" %}</div>
+  <div class="col-md-6 col-lg-4">{% include "partials/_game_card.html" %}</div>
+  <div class="col-md-6 col-lg-4">{% include "partials/_game_card.html" %}</div>
+</div>
+{% endblock %}
