@@ -34,7 +34,9 @@ ALLOWED_HOSTS = []
 
 
 PROJECT_APPS = [
-
+        'games',
+        'games_collections',
+        'reviews',
 ]
 
 INSTALLED_APPS = [
