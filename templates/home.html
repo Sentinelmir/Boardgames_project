@@ -10,19 +10,19 @@
         A cozy place to discover board games, read reviews, and browse curated collections.
       </p>
       <div class="d-flex flex-wrap gap-2">
-        <a class="btn btn-sm btn-primary" href="#">Browse games</a>
-        <a class="btn btn-sm btn-outline-secondary" href="#">Featured collections</a>
-        <a class="btn btn-sm btn-outline-secondary" href="#">Add a game</a>
+        <a class="btn btn-sm btn-primary" href="{% url 'games:list' %}">Browse games</a>
+        <a class="btn btn-sm btn-outline-secondary" href="{% url 'collections:list' %}">Featured collections</a>
+        <a class="btn btn-sm btn-outline-secondary" href="{% url 'games:create' %}">Add a game</a>
       </div>
     </div>
+
     <div class="col-lg-4">
       <div class="soft-card p-3">
-        <div class="muted small mb-2">Quick filters</div>
+        <div class="muted small mb-2">Genres</div>
         <div class="d-flex flex-wrap gap-2">
-          <a class="chip" href="#">2–4 players</a>
-          <a class="chip" href="#">~60 minutes</a>
-          <a class="chip" href="#">Strategy</a>
-          <a class="chip" href="#">Family</a>
+          {% for value, label in genre_choices %}
+            <a class="chip" href="{% url 'genre-detail' value %}">{{ label }}</a>
+          {% endfor %}
         </div>
       </div>
     </div>
@@ -33,27 +33,26 @@
   <div class="col-lg-7">
     <h2 class="h5 section-title mb-3">New games</h2>
     <div class="row g-3">
-      <div class="col-md-6">
-        {% include "partials/_game_card.html" %}
-      </div>
-      <div class="col-md-6">
-        {% include "partials/_game_card.html" %}
-      </div>
-      <div class="col-md-6">
-        {% include "partials/_game_card.html" %}
-      </div>
-      <div class="col-md-6">
-        {% include "partials/_game_card.html" %}
-      </div>
+      {% for game in latest_games %}
+        <div class="col-md-6">
+          {% include "partials/_game_card.html" with game=game %}
+        </div>
+      {% empty %}
+        <div class="col-12">
+          <div class="panel">No games yet.</div>
+        </div>
+      {% endfor %}
     </div>
   </div>
 
   <div class="col-lg-5">
     <h2 class="h5 section-title mb-3">Featured collections</h2>
     <div class="d-grid gap-3">
-      {% include "partials/_collection_card.html" %}
-      {% include "partials/_collection_card.html" %}
-      {% include "partials/_collection_card.html" %}
+      {% for collection in featured_collections %}
+        {% include "partials/_collection_card.html" with collection=collection %}
+      {% empty %}
+        <div class="panel">No collections yet.</div>
+      {% endfor %}
     </div>
   </div>
 </div>

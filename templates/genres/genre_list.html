@@ -5,18 +5,17 @@
 <div class="d-flex align-items-end justify-content-between gap-2 mb-3">
   <div>
     <h1 class="h4 mb-1">Genres</h1>
-    <div class="muted">Click a genre to see matching games (placeholder for now).</div>
+    <div class="muted">Choose a genre to see matching games.</div>
   </div>
 </div>
 
 <div class="panel">
   <div class="d-flex flex-wrap gap-2">
-    <a class="chip link-soft" href="#">Economic</a>
-    <a class="chip link-soft" href="#">Strategy</a>
-    <a class="chip link-soft" href="#">Eurogame</a>
-    <a class="chip link-soft" href="#">Family</a>
-    <a class="chip link-soft" href="#">Party</a>
-    <a class="chip link-soft" href="#">Cooperative</a>
+    {% for genre in genres %}
+      <a class="chip link-soft" href="{% url 'genre-detail' genre.value %}">
+        {{ genre.label }} ({{ genre.count }})
+      </a>
+    {% endfor %}
   </div>
 </div>
 {% endblock %}

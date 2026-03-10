@@ -1,64 +1,46 @@
-from django.db import models
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.contrib.postgres.fields import ArrayField
 from django.core.exceptions import ValidationError
+from django.core.validators import MinValueValidator, MaxValueValidator
+from django.db import models
+from django.db.models import Avg
 from django.utils.text import slugify
-
-class Genre(models.Model):
-    name = models.CharField(max_length=50, unique=True)
-    slug = models.SlugField(max_length=60, unique=True, blank=True)
-
-    class Meta:
-        ordering = ("name",)
-
-    def __str__(self) -> str:
-        return self.name
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            base = slugify(self.name)
-            self.slug = base or "genre"
-        super().save(*args, **kwargs)
 
 
 class Game(models.Model):
+    class Genre(models.TextChoices):
+        ECONOMIC = "economic", "Economic"
+        STRATEGY = "strategy", "Strategy"
+        FAMILY = "family", "Family"
+        PARTY = "party", "Party"
+        COOPERATIVE = "cooperative", "Cooperative"
+        ABSTRACT = "abstract", "Abstract"
+        THEMATIC = "thematic", "Thematic"
+
     title = models.CharField(max_length=120, unique=True)
     slug = models.SlugField(max_length=140, unique=True, blank=True)
-
     description = models.TextField()
 
-    min_players = models.PositiveIntegerField(
-        validators=[MinValueValidator(1), MaxValueValidator(20)],
-        help_text="Minimum number of players.",
-    )
-    max_players = models.PositiveIntegerField(
-        validators=[MinValueValidator(1), MaxValueValidator(20)],
-        help_text="Maximum number of players.",
+    genres = ArrayField(
+        base_field=models.CharField(max_length=20, choices=Genre.choices),
+        default=list,
+        blank=True,
     )
 
-    duration_min = models.PositiveIntegerField(
-        validators=[MinValueValidator(1), MaxValueValidator(1000)],
-        help_text="Average playtime in minutes.",
+    min_players = models.PositiveSmallIntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(20)]
     )
-
-    age_min = models.PositiveIntegerField(
+    max_players = models.PositiveSmallIntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(20)]
+    )
+    duration_min = models.PositiveSmallIntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(1000)]
+    )
+    age_min = models.PositiveSmallIntegerField(
         validators=[MinValueValidator(0), MaxValueValidator(99)],
         blank=True,
         null=True,
-        help_text="Minimum recommended age (optional).",
     )
-
-    image = models.ImageField(
-        upload_to="games/",
-        blank=True,
-        null=True,
-        help_text="Square image looks best.",
-    )
-
-    genres = models.ManyToManyField(
-        Genre,
-        related_name="games",
-        blank=True,
-    )
+    image = models.ImageField(upload_to="games/", blank=True, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -66,16 +48,37 @@ class Game(models.Model):
     class Meta:
         ordering = ("-created_at",)
 
-    def __str__(self) -> str:
+    def __str__(self):
         return self.title
 
     def clean(self):
         super().clean()
+        errors = {}
+
         if self.min_players and self.max_players and self.min_players > self.max_players:
-            raise ValidationError({"max_players": "Max players must be >= min players."})
+            errors["max_players"] = "Max players must be greater than or equal to min players."
+
+        if not self.genres:
+            errors["genres"] = "Select at least one genre."
+
+        if errors:
+            raise ValidationError(errors)
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            base = slugify(self.title)
-            self.slug = base or "game"
+            self.slug = slugify(self.title) or "game"
         super().save(*args, **kwargs)
+
+    @property
+    def genre_pairs(self):
+        choices_map = dict(self.Genre.choices)
+        return [(value, choices_map.get(value, value)) for value in self.genres]
+
+    @property
+    def genres_display(self):
+        return ", ".join(label for _, label in self.genre_pairs)
+
+    @property
+    def average_rating(self):
+        avg = self.reviews.aggregate(avg_rating=Avg("rating"))["avg_rating"]
+        return round(avg, 1) if avg is not None else None

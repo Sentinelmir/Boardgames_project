@@ -1,63 +1,23 @@
 {% extends "base.html" %}
-{% block title %}Add game · Boardgame World{% endblock %}
+{% block title %}{{ page_title }} · Boardgame World{% endblock %}
 
 {% block content %}
 <div class="panel">
   <div class="d-flex align-items-end justify-content-between gap-2 mb-3">
     <div>
-      <h1 class="h4 mb-1">Add game</h1>
-      <div class="muted">Form is a placeholder. We’ll connect Django forms later.</div>
+      <h1 class="h4 mb-1">{{ page_title }}</h1>
+      <div class="muted">Create or edit a board game entry.</div>
     </div>
-    <a class="btn btn-sm btn-outline-secondary" href="#">Back</a>
+    <a class="btn btn-sm btn-outline-secondary" href="{{ cancel_url }}">Back</a>
   </div>
 
-  <form>
-    <div class="row g-3">
-      <div class="col-md-6">
-        <label class="form-label">Title</label>
-        <input class="form-control" value="Brass: Birmingham">
-      </div>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% include "partials/_form_fields.html" %}
 
-      <div class="col-md-6">
-        <label class="form-label">Image</label>
-        <input class="form-control" type="file">
-        <div class="form-text">Square image looks best for the game card.</div>
-      </div>
-
-      <div class="col-12">
-        <label class="form-label">Description</label>
-        <textarea class="form-control" rows="4">Economic strategy set in the Industrial Revolution.</textarea>
-      </div>
-
-      <div class="col-md-4">
-        <label class="form-label">Min players</label>
-        <input class="form-control" value="2">
-      </div>
-
-      <div class="col-md-4">
-        <label class="form-label">Max players</label>
-        <input class="form-control" value="4">
-      </div>
-
-      <div class="col-md-4">
-        <label class="form-label">Duration (minutes)</label>
-        <input class="form-control" value="120">
-      </div>
-
-      <div class="col-12">
-        <label class="form-label">Genres</label>
-        <select class="form-select" multiple>
-          <option selected>Economic</option>
-          <option selected>Strategy</option>
-          <option>Family</option>
-          <option>Party</option>
-        </select>
-      </div>
-
-      <div class="col-12 d-flex gap-2">
-        <button class="btn btn-primary" type="button">Save</button>
-        <a class="btn btn-outline-secondary" href="#">Cancel</a>
-      </div>
+    <div class="d-flex gap-2">
+      <button class="btn btn-primary" type="submit">{{ submit_label }}</button>
+      <a class="btn btn-outline-secondary" href="{{ cancel_url }}">Cancel</a>
     </div>
   </form>
 </div>

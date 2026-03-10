@@ -1,6 +1,5 @@
 from django.contrib import admin
 from unfold.admin import ModelAdmin
-
 from .models import Collection
 
 
@@ -10,3 +9,4 @@ class CollectionAdmin(ModelAdmin):
     search_fields = ("title", "description")
     prepopulated_fields = {"slug": ("title",)}
     readonly_fields = ("created_at",)
+    filter_horizontal = ("games",)
