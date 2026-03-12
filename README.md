@@ -1,8 +1,9 @@
 # Boardgame World
 
-Boardgame World is a small Django web application for cataloging board games, writing reviews, and grouping games into curated collections.
+Boardgame World is a small Django web application for cataloging board games, writing reviews, and organizing games into curated collections.
 
-The idea for the project comes from my personal interest in board games. I wanted to build a simple and cozy place where different games can be added, described, reviewed, and organized by theme.
+The project was created as a study project for practicing Django models, views, forms, templates, and PostgreSQL integration.  
+The idea comes from a personal interest in board games and the desire to build a simple place where games can be stored, explored, and reviewed.
 
 ## Features
 
@@ -45,11 +46,78 @@ Relationships:
 
 ## Environment variables
 
-Create a `.env` file in the project root and add:
+Normally sensitive configuration should not be stored in a repository.  
+However, for the purposes of this university project a `.env` file is included intentionally.
 
-```env
+This allows the project to be downloaded and run immediately without additional configuration, making the evaluation process easier.
+
+The `.env` file contains only local database settings used for development.
+
+Example structure:
+```
 DB_NAME=your_db_name
 DB_USER=your_db_user
 DB_PASSWORD=your_db_password
 DB_HOST=localhost
 DB_PORT=5432
+```
+
+
+---
+
+## Sample data
+
+The repository includes a fixture with example data (board games, collections, and reviews).
+
+To load the sample data:
+```python manage.py loaddata games/fixtures/sample_data.json```
+
+
+This allows the project to be tested immediately after migrations.
+
+---
+
+## Running the project
+
+1. Clone the repository
+2. Create and activate a virtual environment
+3. Install dependencies
+4. Run migrations
+5. Load sample data
+6. Start the development server
+
+Example:
+```
+pip install -r requirements.txt
+python manage.py makemigrations
+python manage.py migrate
+python manage.py loaddata games/fixtures/sample_data.json
+python manage.py runserver
+```
+
+Then open in the browser:
+```http://127.0.0.1:8000/```
+
+---
+
+## Pages
+
+The application contains multiple dynamic pages including:
+
+- Home page
+- Games list
+- Game details
+- Create/Edit/Delete game
+- Genre pages
+- Collections list and detail pages
+- Reviews list
+- Create/Edit/Delete review
+- Custom 404 page
+
+---
+
+## Notes
+
+Authentication is intentionally not implemented because it is outside the scope of the assignment requirements.
+
+The project focuses on Django architecture, database relationships, forms, and template rendering.
