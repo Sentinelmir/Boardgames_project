@@ -1,13 +1,14 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}{{ collection.title }} · Collections · Boardgame World{% endblock %}
 
 {% block content %}
 <div class="panel mb-4">
-  {% if collection.banner %}
-    <img class="collection-banner mb-3" src="{{ collection.banner.url }}" alt="{{ collection.title }}">
-  {% else %}
-    <img class="collection-banner mb-3" src="https://images.unsplash.com/photo-1523875194681-bedd468c58bf?auto=format&fit=crop&w=1400&q=60" alt="{{ collection.title }}">
-  {% endif %}
+   <img
+  class="collection-banner mb-3"
+  src="{% static 'images/collections/' %}{{ collection.slug }}.jpg"
+  alt="{{ collection.title }}"
+>
 
   <div class="d-flex align-items-start justify-content-between gap-2">
     <div>

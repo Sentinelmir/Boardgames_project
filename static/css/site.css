@@ -240,3 +240,26 @@
 .collection-card-count.chip {
   display: inline-flex;
 }
+
+.genres-panel {
+  padding: 10px 14px;
+}
+
+.genres-panel .chip {
+  padding: 6px 10px;
+  font-size: 0.9rem;
+}
+
+.genres-panel .d-flex {
+  gap: 8px;
+}
+
+.active-chip{
+  background: linear-gradient(
+    135deg,
+    rgba(143,182,255,0.35),
+    rgba(255,180,198,0.30)
+  );
+  border-color: rgba(143,182,255,0.45);
+  font-weight: 700;
+}

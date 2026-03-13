@@ -18,7 +18,6 @@ class HomePageView(TemplateView):
         context["genre_choices"] = Game.Genre.choices
         return context
 
-
 class GameListView(ListView):
     model = Game
     template_name = "games/game_list.html"
@@ -130,8 +129,11 @@ class GenreListView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        genres = []
 
+        selected_genre = self.request.GET.get("genre", "")
+        valid_genres = dict(Game.Genre.choices)
+
+        genres = []
         for value, label in Game.Genre.choices:
             genres.append({
                 "value": value,
@@ -139,7 +141,19 @@ class GenreListView(TemplateView):
                 "count": Game.objects.filter(genres__overlap=[value]).count(),
             })
 
+        games = Game.objects.all()
+
+        if selected_genre in valid_genres:
+            games = games.filter(genres__overlap=[selected_genre])
+            selected_genre_label = valid_genres[selected_genre]
+        else:
+            selected_genre = ""
+            selected_genre_label = ""
+
         context["genres"] = genres
+        context["games"] = games
+        context["selected_genre"] = selected_genre
+        context["selected_genre_label"] = selected_genre_label
         return context
 
 
