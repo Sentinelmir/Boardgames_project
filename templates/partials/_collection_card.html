@@ -1,17 +1,20 @@
-<a class="collection-card soft-card p-3 text-decoration-none" href="{% url 'collections:detail' collection.slug %}">
-  {% if collection.banner %}
-    <img class="collection-banner mb-3" src="{{ collection.banner.url }}" alt="{{ collection.title }}">
-  {% else %}
-    <img class="collection-banner mb-3"
-         src="https://images.unsplash.com/photo-1523875194681-bedd468c58bf?auto=format&fit=crop&w=1200&q=60"
-         alt="{{ collection.title }}">
-  {% endif %}
+{% load static %}
 
-  <div class="d-flex align-items-start justify-content-between gap-2">
-    <div>
+<a class="collection-card soft-card p-3 text-decoration-none" href="{% url 'collections:detail' collection.slug %}">
+  <img
+  class="collection-banner mb-3"
+  src="{% static 'images/collections/' %}{{ collection.slug }}.jpg"
+  alt="{{ collection.title }}"
+>
+
+  <div class="collection-card-meta">
+    <div class="collection-card-text">
       <div class="h6 mb-1 text-dark">{{ collection.title }}</div>
       <div class="muted small">{{ collection.description|truncatechars:90 }}</div>
     </div>
-    <span class="chip">{{ collection.games.count }} games</span>
+
+    <span class="chip collection-card-count">
+      {{ collection.games.count }} games
+    </span>
   </div>
 </a>

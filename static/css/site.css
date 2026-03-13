@@ -206,17 +206,37 @@
   text-decoration: underline;
 }
 
-/* Collection card link should behave like a block card */
-.collection-card{
+.collection-card {
   display: block;
-  color: inherit;
 }
 
-.collection-card:hover{
-  text-decoration: none;
+.collection-card-meta {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
 }
 
-/* Prevent weird selection/spacing issues */
-.collection-card .collection-banner{
-  display: block;
+.collection-card-text {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.collection-card-text .h6,
+.collection-card-text .muted {
+  overflow-wrap: break-word;
+}
+
+.collection-card-count {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  margin-left: auto;
+  align-self: flex-start;
+  padding: 8px 14px;
+  font-size: 0.95rem;
+}
+
+.collection-card-count.chip {
+  display: inline-flex;
 }
