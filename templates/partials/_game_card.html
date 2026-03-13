@@ -23,7 +23,7 @@
     {% endif %}
   </div>
 
-  <p class="muted small mb-3">{{ game.description|truncatechars:120 }}</p>
+  <p class="muted small mb-3">{{ game.description|truncatewords:15 }}</p>
 
   <div class="d-flex gap-2">
     <a class="btn btn-sm btn-outline-secondary" href="{% url 'games:detail' game.slug %}">Details</a>

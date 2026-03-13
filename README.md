@@ -55,10 +55,10 @@ The `.env` file contains only local database settings used for development.
 
 Example structure:
 ```
-DB_NAME=your_db_name
-DB_USER=your_db_user
-DB_PASSWORD=your_db_password
-DB_HOST=localhost
+DB_NAME=boardgames_db
+DB_USER=admin
+DB_PASSWORD=12345
+DB_HOST=127.0.0.1
 DB_PORT=5432
 ```
 
@@ -89,7 +89,6 @@ This allows the project to be tested immediately after migrations.
 Example:
 ```
 pip install -r requirements.txt
-python manage.py makemigrations
 python manage.py migrate
 python manage.py loaddata games/fixtures/sample_data.json
 python manage.py runserver
