@@ -62,19 +62,6 @@ DB_HOST=127.0.0.1
 DB_PORT=5432
 ```
 
-
----
-
-## Sample data
-
-The repository includes a fixture with example data (board games, collections, and reviews).
-
-To load the sample data:
-```python manage.py loaddata games/fixtures/sample_data.json```
-
-
-This allows the project to be tested immediately after migrations.
-
 ---
 
 ## Running the project
@@ -83,8 +70,7 @@ This allows the project to be tested immediately after migrations.
 2. Create and activate a virtual environment
 3. Install dependencies
 4. Run migrations
-5. Load sample data
-6. Start the development server
+5. Start the development server
 
 Example:
 ```
