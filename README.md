@@ -53,15 +53,6 @@ This allows the project to be downloaded and run immediately without additional 
 
 The `.env` file contains only local database settings used for development.
 
-Example structure:
-```
-DB_NAME=boardgames_db
-DB_USER=admin
-DB_PASSWORD=12345
-DB_HOST=127.0.0.1
-DB_PORT=5432
-```
-
 ---
 
 ## Running the project
