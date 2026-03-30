@@ -1,10 +1,10 @@
+from django.conf import settings
 from django.contrib.postgres.fields import ArrayField
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models import Avg
 from django.utils.text import slugify
-
 
 class Game(models.Model):
     class Genre(models.TextChoices):
@@ -41,6 +41,14 @@ class Game(models.Model):
         null=True,
     )
     image = models.ImageField(upload_to="games/", blank=True, null=True)
+
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="created_games",
+        null=True,
+        blank=True,
+    )
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

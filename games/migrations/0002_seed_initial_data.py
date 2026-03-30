@@ -1,4 +1,68 @@
+from django.contrib.auth.hashers import make_password
 from django.db import migrations
+
+USERS_DATA = [
+    {
+        "username": "elena",
+        "nickname": "Elena",
+        "email": "elena@example.com",
+        "password": "testpass123",
+    },
+    {
+        "username": "nikolay",
+        "nickname": "Nikolay",
+        "email": "nikolay@example.com",
+        "password": "testpass123",
+    },
+    {
+        "username": "ira",
+        "nickname": "Ira",
+        "email": "ira@example.com",
+        "password": "testpass123",
+    },
+    {
+        "username": "mira",
+        "nickname": "Mira",
+        "email": "mira@example.com",
+        "password": "testpass123",
+    },
+    {
+        "username": "pavel",
+        "nickname": "Pavel",
+        "email": "pavel@example.com",
+        "password": "testpass123",
+    },
+    {
+        "username": "anna",
+        "nickname": "Anna",
+        "email": "anna@example.com",
+        "password": "testpass123",
+    },
+    {
+        "username": "sofia",
+        "nickname": "Sofia",
+        "email": "sofia@example.com",
+        "password": "testpass123",
+    },
+    {
+        "username": "maksim",
+        "nickname": "Maksim",
+        "email": "maksim@example.com",
+        "password": "testpass123",
+    },
+    {
+        "username": "artem",
+        "nickname": "Artem",
+        "email": "artem@example.com",
+        "password": "testpass123",
+    },
+    {
+        "username": "olga",
+        "nickname": "Olga",
+        "email": "olga@example.com",
+        "password": "testpass123",
+    },
+]
 
 
 GAMES_DATA = [
@@ -68,51 +132,50 @@ GAMES_DATA = [
         "age_min": 8,
         "image": "games/pandemic.jpg",
     },
-
-{
-    "title": "Viticulture",
-    "slug": "viticulture",
-    "description": "A worker-placement game about building a successful winery, managing seasons, fulfilling wine orders, and developing long-term production.",
-    "genres": ["economic", "strategy"],
-    "min_players": 1,
-    "max_players": 6,
-    "duration_min": 90,
-    "age_min": 13,
-    "image": "games/viticulture.jpg",
-},
-{
-    "title": "Dune: Imperium",
-    "slug": "dune-imperium",
-    "description": "A strategic blend of deck-building and worker placement where players compete for influence, alliances, and military control on Arrakis.",
-    "genres": ["strategy", "thematic"],
-    "min_players": 1,
-    "max_players": 4,
-    "duration_min": 120,
-    "age_min": 13,
-    "image": "games/dune-imperium.jpg",
-},
-{
-    "title": "Blood Rage",
-    "slug": "blood-rage",
-    "description": "A highly confrontational miniatures game where Viking clans battle, upgrade warriors, complete quests, and seek glory before Ragnarok.",
-    "genres": ["strategy", "thematic"],
-    "min_players": 2,
-    "max_players": 4,
-    "duration_min": 90,
-    "age_min": 14,
-    "image": "games/blood-rage.jpg",
-},
-{
-    "title": "Gloomhaven",
-    "slug": "gloomhaven",
-    "description": "A large cooperative campaign game with tactical combat, character progression, branching scenarios, and persistent world changes.",
-    "genres": ["cooperative", "strategy", "thematic"],
-    "min_players": 1,
-    "max_players": 4,
-    "duration_min": 120,
-    "age_min": 14,
-    "image": "games/gloomhaven.jpg",
-},
+    {
+        "title": "Viticulture",
+        "slug": "viticulture",
+        "description": "A worker-placement game about building a successful winery, managing seasons, fulfilling wine orders, and developing long-term production.",
+        "genres": ["economic", "strategy"],
+        "min_players": 1,
+        "max_players": 6,
+        "duration_min": 90,
+        "age_min": 13,
+        "image": "games/viticulture.jpg",
+    },
+    {
+        "title": "Dune: Imperium",
+        "slug": "dune-imperium",
+        "description": "A strategic blend of deck-building and worker placement where players compete for influence, alliances, and military control on Arrakis.",
+        "genres": ["strategy", "thematic"],
+        "min_players": 1,
+        "max_players": 4,
+        "duration_min": 120,
+        "age_min": 13,
+        "image": "games/dune-imperium.jpg",
+    },
+    {
+        "title": "Blood Rage",
+        "slug": "blood-rage",
+        "description": "A highly confrontational miniatures game where Viking clans battle, upgrade warriors, complete quests, and seek glory before Ragnarok.",
+        "genres": ["strategy", "thematic"],
+        "min_players": 2,
+        "max_players": 4,
+        "duration_min": 90,
+        "age_min": 14,
+        "image": "games/blood-rage.jpg",
+    },
+    {
+        "title": "Gloomhaven",
+        "slug": "gloomhaven",
+        "description": "A large cooperative campaign game with tactical combat, character progression, branching scenarios, and persistent world changes.",
+        "genres": ["cooperative", "strategy", "thematic"],
+        "min_players": 1,
+        "max_players": 4,
+        "duration_min": 120,
+        "age_min": 14,
+        "image": "games/gloomhaven.jpg",
+    },
 ]
 
 
@@ -154,82 +217,111 @@ COLLECTIONS_DATA = [
     },
 ]
 
+
 REVIEWS_DATA = [
     {
         "game_slug": "brass-birmingham",
-        "author_name": "Elena",
+        "username": "elena",
         "rating": 5,
         "text": "Deep economic gameplay with satisfying long-term planning.",
     },
     {
         "game_slug": "terraforming-mars",
-        "author_name": "Nikolay",
+        "username": "nikolay",
         "rating": 5,
         "text": "A great engine-building game with lots of replayability.",
     },
     {
         "game_slug": "root",
-        "author_name": "Ira",
+        "username": "ira",
         "rating": 4,
         "text": "Very thematic and clever, especially once everyone knows the factions.",
     },
     {
         "game_slug": "wingspan",
-        "author_name": "Mira",
+        "username": "mira",
         "rating": 5,
         "text": "Beautiful presentation and smooth strategic decisions.",
     },
     {
         "game_slug": "azul",
-        "author_name": "Pavel",
+        "username": "pavel",
         "rating": 4,
         "text": "Simple rules, but the drafting decisions are excellent.",
     },
     {
         "game_slug": "pandemic",
-        "author_name": "Anna",
+        "username": "anna",
         "rating": 5,
         "text": "A tense cooperative game that works very well with new players.",
     },
-{
-    "game_slug": "viticulture",
-    "author_name": "Sofia",
-    "rating": 5,
-    "text": "A very satisfying worker-placement game with a cozy theme and strong planning.",
-},
-{
-    "game_slug": "dune-imperium",
-    "author_name": "Maksim",
-    "rating": 5,
-    "text": "Excellent combination of deck-building and worker placement with real tension.",
-},
-{
-    "game_slug": "blood-rage",
-    "author_name": "Artem",
-    "rating": 4,
-    "text": "Fast, aggressive, and dramatic. Great for players who enjoy direct conflict.",
-},
-{
-    "game_slug": "gloomhaven",
-    "author_name": "Olga",
-    "rating": 5,
-    "text": "Huge campaign depth and very strong tactical combat if you want a long-term game.",
-},
+    {
+        "game_slug": "viticulture",
+        "username": "sofia",
+        "rating": 5,
+        "text": "A very satisfying worker-placement game with a cozy theme and strong planning.",
+    },
+    {
+        "game_slug": "dune-imperium",
+        "username": "maksim",
+        "rating": 5,
+        "text": "Excellent combination of deck-building and worker placement with real tension.",
+    },
+    {
+        "game_slug": "blood-rage",
+        "username": "artem",
+        "rating": 4,
+        "text": "Fast, aggressive, and dramatic. Great for players who enjoy direct conflict.",
+    },
+    {
+        "game_slug": "gloomhaven",
+        "username": "olga",
+        "rating": 5,
+        "text": "Huge campaign depth and very strong tactical combat if you want a long-term game.",
+    },
 ]
 
 
 def seed_initial_data(apps, schema_editor):
+    User = apps.get_model("accounts", "CustomUser")
     Game = apps.get_model("games", "Game")
     Collection = apps.get_model("games_collections", "Collection")
     Review = apps.get_model("reviews", "Review")
 
+    created_users = {}
     created_games = {}
+
+    for user_data in USERS_DATA:
+        user, created = User.objects.get_or_create(
+            username=user_data["username"],
+            defaults={
+                "nickname": user_data["nickname"],
+                "email": user_data["email"],
+                "password": make_password(user_data["password"]),
+            },
+        )
+
+        if not created:
+            changed = False
+
+            if user.nickname != user_data["nickname"]:
+                user.nickname = user_data["nickname"]
+                changed = True
+
+            if user.email != user_data["email"]:
+                user.email = user_data["email"]
+                changed = True
+
+            if changed:
+                user.save()
+
+        created_users[user.username] = user
 
     for game_data in GAMES_DATA:
         game, _ = Game.objects.update_or_create(
-            title=game_data["title"],
+            slug=game_data["slug"],
             defaults={
-                "slug": game_data["slug"],
+                "title": game_data["title"],
                 "description": game_data["description"],
                 "genres": game_data["genres"],
                 "min_players": game_data["min_players"],
@@ -242,28 +334,28 @@ def seed_initial_data(apps, schema_editor):
         created_games[game.slug] = game
 
     for collection_data in COLLECTIONS_DATA:
-        game_slugs = collection_data["games"]
-
         collection, _ = Collection.objects.update_or_create(
-            title=collection_data["title"],
+            slug=collection_data["slug"],
             defaults={
-                "slug": collection_data["slug"],
+                "title": collection_data["title"],
                 "description": collection_data["description"],
             },
         )
 
         collection.games.set(
-            [created_games[slug] for slug in game_slugs if slug in created_games]
+            [created_games[slug] for slug in collection_data["games"] if slug in created_games]
         )
 
     for review_data in REVIEWS_DATA:
         game = created_games.get(review_data["game_slug"])
-        if not game:
+        user = created_users.get(review_data["username"])
+
+        if not game or not user:
             continue
 
         Review.objects.update_or_create(
             game=game,
-            author_name=review_data["author_name"],
+            author=user,
             defaults={
                 "rating": review_data["rating"],
                 "text": review_data["text"],
@@ -272,15 +364,15 @@ def seed_initial_data(apps, schema_editor):
 
 
 def remove_seed_initial_data(apps, schema_editor):
+    User = apps.get_model("accounts", "CustomUser")
     Game = apps.get_model("games", "Game")
     Collection = apps.get_model("games_collections", "Collection")
     Review = apps.get_model("reviews", "Review")
 
-    review_pairs = [(item["game_slug"], item["author_name"]) for item in REVIEWS_DATA]
-    for game_slug, author_name in review_pairs:
+    for review_data in REVIEWS_DATA:
         Review.objects.filter(
-            game__slug=game_slug,
-            author_name=author_name,
+            game__slug=review_data["game_slug"],
+            author__username=review_data["username"],
         ).delete()
 
     Collection.objects.filter(
@@ -291,10 +383,15 @@ def remove_seed_initial_data(apps, schema_editor):
         slug__in=[item["slug"] for item in GAMES_DATA]
     ).delete()
 
+    User.objects.filter(
+        username__in=[item["username"] for item in USERS_DATA]
+    ).delete()
+
 
 class Migration(migrations.Migration):
 
     dependencies = [
+        ("accounts", "0001_initial"),
         ("games", "0001_initial"),
         ("games_collections", "0001_initial"),
         ("reviews", "0001_initial"),

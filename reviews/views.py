@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.views.generic import ListView, CreateView, UpdateView, FormView
@@ -13,7 +14,7 @@ class ReviewListView(ListView):
     context_object_name = "reviews"
 
     def get_queryset(self):
-        queryset = Review.objects.select_related("game")
+        queryset = Review.objects.select_related("game", "author")
         self.current_game = None
 
         game_slug = self.request.GET.get("game")
@@ -29,7 +30,7 @@ class ReviewListView(ListView):
         return context
 
 
-class ReviewCreateView(CreateView):
+class ReviewCreateView(LoginRequiredMixin, CreateView):
     model = Review
     form_class = ReviewCreateForm
     template_name = "reviews/review_form.html"
@@ -40,6 +41,7 @@ class ReviewCreateView(CreateView):
 
     def form_valid(self, form):
         form.instance.game = self.game
+        form.instance.author = self.request.user
         return super().form_valid(form)
 
     def get_success_url(self):
@@ -54,14 +56,14 @@ class ReviewCreateView(CreateView):
         return context
 
 
-class ReviewUpdateView(UpdateView):
+class ReviewUpdateView(LoginRequiredMixin, UpdateView):
     model = Review
     form_class = ReviewEditForm
     template_name = "reviews/review_form.html"
     context_object_name = "review"
 
     def get_queryset(self):
-        return Review.objects.select_related("game")
+        return Review.objects.select_related("game", "author").filter(author=self.request.user)
 
     def get_success_url(self):
         return reverse("games:detail", kwargs={"slug": self.object.game.slug})
@@ -75,12 +77,15 @@ class ReviewUpdateView(UpdateView):
         return context
 
 
-class ReviewDeleteView(FormView):
+class ReviewDeleteView(LoginRequiredMixin, FormView):
     template_name = "reviews/review_confirm_delete.html"
     form_class = ReviewDeleteForm
 
     def dispatch(self, request, *args, **kwargs):
-        self.object = get_object_or_404(Review.objects.select_related("game"), pk=kwargs["pk"])
+        self.object = get_object_or_404(
+            Review.objects.select_related("game", "author").filter(author=self.request.user),
+            pk=kwargs["pk"],
+        )
         return super().dispatch(request, *args, **kwargs)
 
     def get_form_kwargs(self):

@@ -25,6 +25,7 @@ PROJECT_APPS = [
         'games',
         'games_collections',
         'reviews',
+        'accounts',
 ]
 
 INSTALLED_APPS = [
@@ -99,3 +100,9 @@ MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTH_USER_MODEL = "accounts.CustomUser"
+
+LOGIN_REDIRECT_URL = "accounts:profile"
+LOGOUT_REDIRECT_URL = "home"
+LOGIN_URL = "accounts:login"

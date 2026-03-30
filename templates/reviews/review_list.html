@@ -25,17 +25,23 @@
           <div class="fw-bold">
             <a class="link-soft" href="{% url 'games:detail' review.game.slug %}">{{ review.game.title }}</a>
           </div>
-          <div class="muted small">by {{ review.author_name }}</div>
+          <div class="muted small">by {% if review.author.nickname %}
+            {{ review.author.nickname }}
+          {% else %}
+            {{ review.author.username }}
+          {% endif %}</div>
         </div>
         <span class="chip">{{ review.rating|stars }}</span>
       </div>
 
       <p class="muted small mt-2 mb-2">{{ review.text }}</p>
 
-      <div class="d-flex gap-2">
-        <a class="btn btn-sm btn-outline-secondary" href="{% url 'reviews:edit' review.pk %}">Edit</a>
-        <a class="btn btn-sm btn-outline-danger" href="{% url 'reviews:delete' review.pk %}">Delete</a>
-      </div>
+      {% if request.user == review.author or request.user.is_staff or request.user.is_superuser %}
+          <div class="d-flex gap-2">
+            <a class="btn btn-sm btn-outline-secondary" href="{% url 'reviews:edit' review.pk %}">Edit</a>
+            <a class="btn btn-sm btn-outline-danger" href="{% url 'reviews:delete' review.pk %}">Delete</a>
+          </div>
+{% endif %}
     </div>
   {% empty %}
     <div class="muted">No reviews yet.</div>

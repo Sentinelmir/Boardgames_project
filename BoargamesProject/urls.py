@@ -13,6 +13,7 @@ urlpatterns = [
     path("genres/<slug:genre>/", GenreDetailView.as_view(), name="genre-detail"),
     path("collections/", include("games_collections.urls")),
     path("reviews/", include("reviews.urls")),
+    path("accounts/", include("accounts.urls")),
 ]
 
 if settings.DEBUG:

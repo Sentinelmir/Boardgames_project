@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Register · Boardgame World{% endblock %}
+
+{% block content %}
+<div class="panel">
+  <div class="d-flex align-items-end justify-content-between gap-2 mb-3">
+    <div>
+      <h1 class="h4 mb-1">Create account</h1>
+      <div class="muted">Register to manage your profile, reviews and game lists.</div>
+    </div>
+    <a class="btn btn-sm btn-outline-secondary" href="{% url 'home' %}">Back</a>
+  </div>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% include "partials/_form_fields.html" %}
+
+    <div class="d-flex gap-2">
+      <button class="btn btn-primary" type="submit">Register</button>
+      <a class="btn btn-outline-secondary" href="{% url 'accounts:login' %}">Login</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -1,13 +1,21 @@
 <div class="soft-card p-3 h-100">
   {% if game.image %}
-    <img class="game-thumb mb-3" src="{{ game.image.url }}" alt="{{ game.title }}">
+    <a href="{% url 'games:detail' game.slug %}">
+      <img class="game-thumb mb-3" src="{{ game.image.url }}" alt="{{ game.title }}">
+    </a>
   {% else %}
-    <img class="game-thumb mb-3" src="https://images.unsplash.com/photo-1611996575749-79a3a250f948?auto=format&fit=crop&w=900&q=60" alt="{{ game.title }}">
+    <a href="{% url 'games:detail' game.slug %}">
+      <img class="game-thumb mb-3" src="https://images.unsplash.com/photo-1611996575749-79a3a250f948?auto=format&fit=crop&w=900&q=60" alt="{{ game.title }}">
+    </a>
   {% endif %}
 
   <div class="d-flex align-items-start justify-content-between gap-2">
     <div>
-      <div class="h6 mb-1">{{ game.title }}</div>
+      <div class="h6 mb-1">
+        <a class="text-decoration-none link-dark" href="{% url 'games:detail' game.slug %}">
+          {{ game.title }}
+        </a>
+      </div>
       <div class="muted small mb-2">{{ game.genres_display }}</div>
     </div>
     <span class="chip">
@@ -25,8 +33,38 @@
 
   <p class="muted small mb-3">{{ game.description|truncatewords:15 }}</p>
 
-  <div class="d-flex gap-2">
-    <a class="btn btn-sm btn-outline-secondary" href="{% url 'games:detail' game.slug %}">Details</a>
-    <a class="btn btn-sm btn-primary" href="{% url 'reviews:create' game.slug %}">Add review</a>
-  </div>
+<div class="d-flex gap-2 align-items-center flex-wrap">
+  <a class="btn btn-sm btn-outline-secondary" href="{% url 'games:detail' game.slug %}">Details</a>
+  <a class="btn btn-sm btn-primary" href="{% url 'reviews:create' game.slug %}">Add review</a>
+
+  {% if request.user.is_authenticated %}
+    <form method="post" action="{% url 'games:played' game.slug %}" class="d-inline m-0">
+      {% csrf_token %}
+      <button
+          type="button"
+          class="btn btn-sm played-btn {% if game in request.user.played_games.all %}btn-success{% else %}btn-outline-success{% endif %}"
+          data-url="{% url 'games:played' game.slug %}"
+          title="Mark as played"
+        >
+          ✓
+        </button>
+    </form>
+
+    <button
+      type="button"
+      class="btn btn-sm wishlist-btn {% if game in request.user.wishlist_games.all %}btn-danger{% else %}btn-outline-danger{% endif %}"
+      data-url="{% url 'games:wishlist' game.slug %}"
+      title="Add to wishlist"
+    >
+      {% if game in request.user.wishlist_games.all %}
+        ♥
+      {% else %}
+        ♡
+      {% endif %}
+    </button>
+  {% else %}
+    <a href="{% url 'accounts:login' %}" class="btn btn-sm btn-outline-success" title="Login to mark as played">✓</a>
+    <a href="{% url 'accounts:login' %}" class="btn btn-sm btn-outline-danger" title="Login to save">♡</a>
+  {% endif %}
+</div>
 </div>

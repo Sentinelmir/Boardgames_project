@@ -1,11 +1,12 @@
-from django.http import Http404
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
+from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, FormView
-
+from games.forms import GameCreateForm, GameEditForm, GameDeleteForm
+from games.models import Game
 from games_collections.models import Collection
-from .forms import GameCreateForm, GameEditForm, GameDeleteForm
-from .models import Game
 
 
 class HomePageView(TemplateView):
@@ -61,13 +62,17 @@ class GameDetailView(DetailView):
     slug_url_kwarg = "slug"
 
     def get_queryset(self):
-        return Game.objects.prefetch_related("reviews", "collections")
+        return Game.objects.prefetch_related("collections", "reviews__author")
 
 
-class GameCreateView(CreateView):
+class GameCreateView(LoginRequiredMixin, CreateView):
     model = Game
     form_class = GameCreateForm
     template_name = "games/game_form.html"
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse("games:detail", kwargs={"slug": self.object.slug})
@@ -80,7 +85,7 @@ class GameCreateView(CreateView):
         return context
 
 
-class GameUpdateView(UpdateView):
+class GameUpdateView(LoginRequiredMixin, UpdateView):
     model = Game
     form_class = GameEditForm
     template_name = "games/game_form.html"
@@ -99,13 +104,20 @@ class GameUpdateView(UpdateView):
         return context
 
 
-class GameDeleteView(FormView):
+class GameDeleteView(LoginRequiredMixin, FormView):
     template_name = "games/game_confirm_delete.html"
     form_class = GameDeleteForm
     success_url = reverse_lazy("games:list")
 
     def dispatch(self, request, *args, **kwargs):
         self.object = get_object_or_404(Game, slug=kwargs["slug"])
+
+        if request.user.is_staff or request.user.is_superuser:
+            return super().dispatch(request, *args, **kwargs)
+
+        if self.object.created_by != request.user:
+            raise Http404("You do not have permission to delete this game.")
+
         return super().dispatch(request, *args, **kwargs)
 
     def get_form_kwargs(self):
@@ -180,3 +192,31 @@ class GenreDetailView(ListView):
         context["genre_value"] = self.genre_value
         context["genre_label"] = self.genre_label
         return context
+
+class WishlistView(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        game = get_object_or_404(Game, slug=kwargs["slug"])
+
+        if game in request.user.wishlist_games.all():
+            request.user.wishlist_games.remove(game)
+            status = "removed"
+        else:
+            request.user.wishlist_games.add(game)
+            status = "added"
+
+        return JsonResponse({"status": status})
+
+
+class PlayedView(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        game = get_object_or_404(Game, slug=kwargs["slug"])
+
+        if game in request.user.played_games.all():
+            request.user.played_games.remove(game)
+            status = "removed"
+        else:
+            request.user.played_games.add(game)
+            request.user.wishlist_games.remove(game)
+            status = "added"
+
+        return JsonResponse({"status": status})

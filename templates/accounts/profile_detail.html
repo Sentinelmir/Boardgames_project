@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}My profile · Boardgame World{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+  <div class="col-lg-4">
+    <div class="panel">
+      <h1 class="h4 mb-3">My profile</h1>
+
+      {% if profile_user.profile_picture %}
+        <img src="{{ profile_user.profile_picture.url }}" alt="{{ profile_user.username }}" class="img-fluid rounded mb-3">
+      {% else %}
+        <div class="soft-card p-4 text-center mb-3">No profile picture</div>
+      {% endif %}
+
+      <div class="mb-2"><strong>Username:</strong> {{ profile_user.username }}</div>
+      <div class="mb-2"><strong>Nickname:</strong> {{ profile_user.nickname }}</div>
+      <div class="mb-2"><strong>Email:</strong> {{ profile_user.email }}</div>
+      <div class="mb-3"><strong>Joined:</strong> {{ profile_user.date_joined|date:"d.m.Y" }}</div>
+
+      <div class="d-grid">
+        <a class="btn btn-primary" href="{% url 'accounts:profile-edit' %}">Edit profile</a>
+      </div>
+    </div>
+
+    <div class="panel mt-4">
+      <h2 class="h5 mb-3">Statistics</h2>
+      <div class="mb-2"><strong>Reviews:</strong> {{ latest_reviews|length }}</div>
+      <div class="mb-2"><strong>Played games:</strong> {{ played_games|length }}</div>
+      <div><strong>Wishlist:</strong> {{ wishlist_games|length }}</div>
+    </div>
+  </div>
+
+  <div class="col-lg-8">
+    <div class="panel mb-4">
+      <h2 class="h5 mb-3">Played games</h2>
+      {% for game in played_games %}
+        <div class="soft-card p-3 mb-2">
+          <a class="fw-bold text-decoration-none" href="{% url 'games:detail' game.slug %}">{{ game.title }}</a>
+        </div>
+      {% empty %}
+        <div class="muted">No played games yet.</div>
+      {% endfor %}
+    </div>
+
+    <div class="panel mb-4">
+      <h2 class="h5 mb-3">Want to try</h2>
+      {% for game in wishlist_games %}
+        <div class="soft-card p-3 mb-2">
+          <a class="fw-bold text-decoration-none" href="{% url 'games:detail' game.slug %}">{{ game.title }}</a>
+        </div>
+      {% empty %}
+        <div class="muted">No games in wishlist yet.</div>
+      {% endfor %}
+    </div>
+
+    <div class="panel">
+      <h2 class="h5 mb-3">Latest comments</h2>
+      {% for review in latest_reviews %}
+        <div class="soft-card p-3 mb-3">
+          <div class="fw-bold">{{ review.game.title }}</div>
+          <div class="muted small mb-2">{{ review.created_at|date:"d.m.Y H:i" }}</div>
+          <div><strong>Rating:</strong> {{ review.rating }}/5</div>
+          <div class="mt-2">{{ review.text }}</div>
+        </div>
+      {% empty %}
+        <div class="muted">No comments yet.</div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}
