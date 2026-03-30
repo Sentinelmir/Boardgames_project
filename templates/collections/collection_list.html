@@ -7,6 +7,10 @@
     <h1 class="h4 mb-1">Collections</h1>
     <div class="muted">Curated sets of games.</div>
   </div>
+
+  {% if request.user.is_authenticated %}
+    <a class="btn btn-primary" href="{% url 'collections:create' %}">Create collection</a>
+  {% endif %}
 </div>
 
 <div class="row g-3">

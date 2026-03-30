@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Server error · Boardgame World{% endblock %}
+
+{% block content %}
+<div class="panel text-center py-5">
+  <h1 class="h3 mb-3">Something went wrong</h1>
+  <p class="muted mb-4">
+    The server encountered an unexpected error. Please try again later.
+  </p>
+  <a class="btn btn-primary" href="{% url 'home' %}">Back to home</a>
+</div>
+{% endblock %}

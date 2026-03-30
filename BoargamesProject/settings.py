@@ -26,6 +26,7 @@ PROJECT_APPS = [
         'games_collections',
         'reviews',
         'accounts',
+        'api',
 ]
 
 INSTALLED_APPS = [
@@ -37,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.postgres',
+    'rest_framework',
+
 ] + PROJECT_APPS
 
 MIDDLEWARE = [

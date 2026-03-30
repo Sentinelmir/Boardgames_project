@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
-
+from django.conf import settings
 from games.models import Game
 
 
@@ -14,6 +14,14 @@ class Collection(models.Model):
         blank=True,
         null=True,
         help_text="Wide banner looks best.",
+    )
+
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="collections",
+        null=True,
+        blank=True,
     )
 
     games = models.ManyToManyField(

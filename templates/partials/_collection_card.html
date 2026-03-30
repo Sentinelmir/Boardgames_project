@@ -1,20 +1,33 @@
 {% load static %}
 
 <a class="collection-card soft-card p-3 text-decoration-none" href="{% url 'collections:detail' collection.slug %}">
-  <img
-  class="collection-banner mb-3"
-  src="{% static 'images/collections/' %}{{ collection.slug }}.jpg"
-  alt="{{ collection.title }}"
->
+  {% if collection.banner %}
+    <img
+      class="collection-banner mb-3"
+      src="{{ collection.banner.url }}"
+      alt="{{ collection.title }}"
+    >
+  {% else %}
+    <img
+      class="collection-banner mb-3"
+      src="{% static 'images/collections/' %}{{ collection.slug }}.jpg"
+      alt="{{ collection.title }}"
+    >
+  {% endif %}
 
-  <div class="collection-card-meta">
-    <div class="collection-card-text">
-      <div class="h6 mb-1 text-dark">{{ collection.title }}</div>
-      <div class="muted small">{{ collection.description|truncatechars:90 }}</div>
-    </div>
-
-    <span class="chip collection-card-count">
-      {{ collection.games.count }} games
-    </span>
+  <div class="d-flex align-items-center justify-content-between gap-2">
+    <h3 class="h6 mb-0 text-dark">{{ collection.title }}</h3>
+    <span class="chip">{{ collection.games.count }} games</span>
   </div>
+
+  {% if collection.owner %}
+    <div class="muted small mt-2">
+      Created by
+      {% if collection.owner.nickname %}
+        {{ collection.owner.nickname }}
+      {% else %}
+        {{ collection.owner.username }}
+      {% endif %}
+    </div>
+  {% endif %}
 </a>

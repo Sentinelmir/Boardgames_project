@@ -6,6 +6,25 @@ from django.db import models
 from django.db.models import Avg
 from django.utils.text import slugify
 
+class Publisher(models.Model):
+    name = models.CharField(max_length=120, unique=True)
+    slug = models.SlugField(max_length=140, unique=True, blank=True)
+    website = models.URLField(blank=True, null=True)
+    description = models.TextField(blank=True)
+    logo = models.ImageField(upload_to="publishers/", blank=True, null=True)
+
+    class Meta:
+        ordering = ("name",)
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name) or "publisher"
+        super().save(*args, **kwargs)
+
+
 class Game(models.Model):
     class Genre(models.TextChoices):
         ECONOMIC = "economic", "Economic"
@@ -52,6 +71,14 @@ class Game(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    publisher = models.ForeignKey(
+        Publisher,
+        on_delete=models.SET_NULL,
+        related_name="games",
+        blank=True,
+        null=True,
+    )
 
     class Meta:
         ordering = ("-created_at",)

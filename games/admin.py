@@ -1,6 +1,6 @@
 from django.contrib import admin
 from unfold.admin import ModelAdmin
-from .models import Game
+from .models import Game, Publisher
 
 
 @admin.register(Game)
@@ -13,3 +13,8 @@ class GameAdmin(ModelAdmin):
     @admin.display(description="Genres")
     def genres_display(self, obj):
         return obj.genres_display
+
+@admin.register(Publisher)
+class PublisherAdmin(admin.ModelAdmin):
+    list_display = ("name", "website")
+    prepopulated_fields = {"slug": ("name",)}

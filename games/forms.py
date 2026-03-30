@@ -22,6 +22,7 @@ class BaseGameForm(forms.ModelForm):
             "duration_min",
             "age_min",
             "image",
+            "publisher",
         ]
         labels = {
             "title": "Game title",
@@ -31,6 +32,7 @@ class BaseGameForm(forms.ModelForm):
             "duration_min": "Duration in minutes",
             "age_min": "Minimum age",
             "image": "Cover image",
+            "publisher": "Publisher",
         }
         help_texts = {
             "description": "Write a short but meaningful description.",
@@ -45,6 +47,7 @@ class BaseGameForm(forms.ModelForm):
             "duration_min": forms.NumberInput(attrs={"class": "form-control", "placeholder": "120"}),
             "age_min": forms.NumberInput(attrs={"class": "form-control", "placeholder": "14"}),
             "image": forms.ClearableFileInput(attrs={"class": "form-control"}),
+            "publisher": forms.Select(attrs={"class": "form-select"}),
         }
 
     def clean_title(self):
